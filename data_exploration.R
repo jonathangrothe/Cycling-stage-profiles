@@ -3,7 +3,9 @@ library(ggplot2)
 library(ggfortify)
 library(dplyr)
 tdf24<-read_csv("tdf24.csv")
-tdf24<-as.data.frame(scale(tdf24))
+wt24<-read_csv("racedata_wt24.csv")
+scaled_wt24<-as.data.frame(scale(wt24))
+scaled_tdf24<-as.data.frame(scale(tdf24))
 
 cluster_ssplot <- function(data){
   ss_vector <- numeric(10)
@@ -14,18 +16,41 @@ cluster_ssplot <- function(data){
   plot(ss_vector)
 }
 
-cluster_ssplot(tdf24)
+cluster_ssplot(scaled_tdf24)
+cluster_ssplot(scaled_wt24)
 
-tdf_3clusters<-kmeans(tdf24,centers=3,nstart=20)
-tdf24_withclusters<-tdf24 %>% 
+tdf_3clusters<-kmeans(scaled_tdf24,centers=3,nstart=20)
+tdf24_withclusters<-scaled_tdf24 %>% 
   mutate(clusternum=tdf_3clusters$cluster)
 
-tdf24_pca<-prcomp(tdf24)
+wt_3clusters<-kmeans(wt24,centers=3,nstart=20)
+wt24_withclusters<-scaled_wt24 %>% 
+  mutate(clusternum=wt_3clusters$cluster)
+
+
+tdf24_pca<-prcomp(scaled_tdf24)
 pca_plot<-autoplot(tdf24_pca,data=tdf24_withclusters,colour='clusternum',label=TRUE)
 pca_plot
+
+wt24_pca<-prcomp(scaled_wt24)
+wt_pca_plot<-autoplot(wt24_pca,data=wt24_withclusters,colour='clusternum',label=TRUE)
+wt_pca_plot
 
 loadings<-tdf24_pca$rotation
 contribution<-loadings[,1]^2/sum(loadings[,1]^2)
 barplot(contribution, names.arg = colnames(tdf24), 
         xlab = "Variables", ylab = "% Contribution to PC1")
+
+wt24_loadings<-wt24_pca$rotation
+wt24_contribution<-wt24_loadings[,1]^2/sum(wt24_loadings[,1]^2)
+barplot(wt24_contribution, names.arg = colnames(scaled_wt24), 
+        xlab = "Variables", ylab = "% Contribution to PC1")
+
+hist(wt24$gap)
+hist(wt24$num_finish)
+hist(wt24$distance_solo)
+hist(wt24$distance)
+hist(wt24$vertical)
+hist(wt24$profile_score)
+hist(wt24$profile_score_last25k)
 
