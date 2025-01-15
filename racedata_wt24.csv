@@ -1,4 +1,4 @@
-distance,vertical,profile_score,profile_score_last25k,gravel_cobbles,date,race type,num_finish,gap,distance_solo
+distance,vertical,profile_score,profile_score_last25k,gravel_cobbles,date,race_type,num_finish,gap,distance_solo
 144,1381,27,12,0,16,2,110,23,0
 142,2269,103,43,0,17,2,79,55,0.8
 145,1606,37,8,0,18,2,115,18,0
