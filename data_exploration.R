@@ -21,11 +21,11 @@ cluster_ssplot(scaled_wt24)
 cluster_ssplot(scaled_wwt24)
 
 wt_3clusters<-kmeans(wt24,centers=3,nstart=20)
-wt24_withclusters<-scaled_wt24 %>% 
+wt24_withclusters<-wt24 %>% 
   mutate(clusternum=wt_3clusters$cluster)
 
 wwt_5clusters<-kmeans(wwt24,centers=5,nstart=20)
-wwt24_withclusters<-scaled_wwt24 %>%
+wwt24_withclusters<-wwt24 %>%
   mutate(clusternum=wwt_5clusters$cluster)
 
 
@@ -63,3 +63,9 @@ hist(wwt24$vertical)
 hist(wwt24$profile_score)
 hist(wwt24$profile_score_last25k)
 
+#next steps: 
+#tuning - research how to do tree tuning best
+#look for trends in outliers and try fitting forests on datasets w/o outliers/extreme values
+#try other models
+#apply these random forests to future stage profiles
+#look for trends in outliers
