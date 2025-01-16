@@ -22,9 +22,3 @@ gap_forest <- forest_info(wt24,gap,wt24$gap)
 solo_forest <- forest_info(wt24,distance_solo,wt24$distance_solo)
 
 
-#next steps: 
-#tuning - research how to do it best
-#look for trends in outliers and try fitting forests on datasets w/o outliers/extreme values
-#try other models
-#apply these random forests to future stage profiles
-#look for trends in outliers
