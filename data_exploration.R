@@ -24,6 +24,9 @@ wt_3clusters<-kmeans(wt24,centers=3,nstart=20)
 wt24_withclusters<-scaled_wt24 %>% 
   mutate(clusternum=wt_3clusters$cluster)
 
+wwt_5clusters<-kmeans(wwt24,centers=5,nstart=20)
+wwt24_withclusters<-scaled_wwt24 %>%
+  mutate(clusternum=wwt_5clusters$cluster)
 
 
 wt24_pca<-prcomp(scaled_wt24)
@@ -35,6 +38,15 @@ wt24_contribution<-wt24_loadings[,1]^2/sum(wt24_loadings[,1]^2)
 barplot(wt24_contribution, names.arg = colnames(scaled_wt24), 
         xlab = "Variables", ylab = "% Contribution to PC1")
 
+wwt24_pca<-prcomp(scaled_wwt24)
+wwt_pca_plot<-autoplot(wwt24_pca,data=wwt24_withclusters,colour='clusternum',label=TRUE)
+wwt_pca_plot
+
+wwt24_loadings<-wwt24_pca$rotation
+wwt24_contribution<-wwt24_loadings[,1]^2/sum(wwt24_loadings[,1]^2)
+barplot(wwt24_contribution, names.arg = colnames(scaled_wwt24), 
+        xlab = "Variables", ylab = "% Contribution to PC1")
+
 hist(wt24$gap)
 hist(wt24$num_finish)
 hist(wt24$distance_solo)
@@ -42,4 +54,12 @@ hist(wt24$distance)
 hist(wt24$vertical)
 hist(wt24$profile_score)
 hist(wt24$profile_score_last25k)
+
+hist(wwt24$gap)
+hist(wwt24$num_finish)
+hist(wwt24$distance_solo)
+hist(wwt24$distance)
+hist(wwt24$vertical)
+hist(wwt24$profile_score)
+hist(wwt24$profile_score_last25k)
 
